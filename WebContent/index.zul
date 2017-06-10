@@ -1,6 +1,22 @@
-<?page title="Auto Generated index.zul"?>
-<window title="Hello World!!" border="normal" width="200px">
+<?page title="GuiaCeramicasTobati"?>
+<?link rel="icon" type="image/x-icon" href="images/icon.png"?>
 
-<label value="You are using: ${desktop.webApp.version}"/>
+<window mode="modal" border="normal" width="99.5%" height="99.5%">
+
+	<div hflex="true" vflex="true"> 
+		<vbox hflex="true" vflex="true" pack="center" align="center">
+			<image src="/images/logo.png"></image>
+			<vbox width="200px">
+				<div height="10px"></div>
+				<textbox placeholder="Usuario.." hflex="true"></textbox>
+				<div height="10px"></div>
+				<textbox placeholder="Password.." hflex="true" type="password"></textbox>
+				<div height="10px"></div>
+				<button label="Ingresar" hflex="true" style="background:#8F6E46;color:white"></button>
+				<div height="10px"></div>
+				<a label="Registrarse.." style="color:#8F6E46"></a>
+			</vbox>			
+		</vbox>
+	</div>
 
 </window>
