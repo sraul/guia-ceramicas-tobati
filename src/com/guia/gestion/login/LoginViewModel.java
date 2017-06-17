@@ -14,10 +14,22 @@ public class LoginViewModel {
 	private Propietario nvoPropietario = new Propietario();
 	private Usuario nvoUsuario = new Usuario();
 	
+	private String user = "";
+	private String password = "";
+	
 	private String mensaje = "";
 
 	@Init
 	public void init() {
+	}
+	
+	@Command
+	public void loguearse() throws Exception {
+		if (validarLogin()) {
+			Executions.sendRedirect("/gestion/menuprincipal.zul");
+		} else {
+			Clients.showNotification(this.mensaje, Clients.NOTIFICATION_TYPE_ERROR, null, null, 0);
+		}
 	}
 	
 	@Command
@@ -49,6 +61,22 @@ public class LoginViewModel {
 		return out;
 	}
 	
+	/**
+	 * @return true si el login es valido..
+	 */
+	private boolean validarLogin() throws Exception {
+		boolean out = true;
+		this.mensaje = "No se puede completar el registro debido a:";
+		
+		RegisterDomain rr = RegisterDomain.getInstance();
+		if (rr.getUsuario(this.user, this.password) == null) {
+			out = false;
+			this.mensaje += "\n - Usuario o password incorrecto..";
+		}
+		
+		return out;
+	}
+	
 	
 	/**
 	 * GETS / SETS
@@ -68,5 +96,21 @@ public class LoginViewModel {
 
 	public void setNvoUsuario(Usuario nvoUsuario) {
 		this.nvoUsuario = nvoUsuario;
+	}
+
+	public String getUser() {
+		return user;
+	}
+
+	public void setUser(String user) {
+		this.user = user;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 }
