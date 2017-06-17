@@ -6,7 +6,7 @@
 	<div hflex="true" vflex="true"> 
 		<vbox hflex="true" vflex="true" pack="center" align="center">
 			<image src="/images/logo.png"></image>
-			<vbox width="200px">
+			<vbox id="vb_log" width="200px">
 				<div height="10px"></div>
 				<textbox placeholder="Usuario.." hflex="true"></textbox>
 				<div height="10px"></div>
@@ -14,7 +14,37 @@
 				<div height="10px"></div>
 				<button label="Ingresar" hflex="true" style="background:#8F6E46;color:white"></button>
 				<div height="10px"></div>
-				<a label="Registrarse.." style="color:#8F6E46"></a>
+				<a label="Registrarse.." style="color:#8F6E46;font-size:11pt"
+					onClick="vb_log.setVisible(false);vb_reg.setVisible(true)"></a>
+			</vbox>	
+			<vbox id="vb_reg" width="200px" visible="false">
+				<label value="Ingrese los datos de Registro.." style="color:#8F6E46;font-size:11pt" />
+				<div height="10px"></div>
+				<hbox hflex="true">
+					<textbox placeholder="Usuario.." hflex="true" constraint="no empty"></textbox>
+					<label style="color:red;font-size:12pt">*</label>
+				</hbox>
+				<div height="10px"></div>
+				<hbox hflex="true">
+					<textbox placeholder="Password.." hflex="true" type="password" constraint="no empty"></textbox>
+					<label style="color:red;font-size:12pt">*</label>
+				</hbox>				
+				<div height="10px"></div>
+				<hbox hflex="true">
+					<textbox placeholder="Confirmar Password.." hflex="true" type="password" constraint="no empty"></textbox>
+					<label style="color:red;font-size:12pt">*</label>
+				</hbox>				
+				<div height="10px"></div>
+				<hbox hflex="true">
+					<textbox placeholder="Nombre y Apellido.." hflex="true" type="password" constraint="no empty"></textbox>
+					<label style="color:red;font-size:12pt">*</label>
+				</hbox>					
+				<div height="10px"></div>
+				<textbox placeholder="Cédula.." hflex="true" type="password"></textbox>
+				<div height="10px"></div>
+				<textbox placeholder="Teléfono.." hflex="true" type="password"></textbox>
+				<div height="10px"></div>
+				<button label="Registrarse" hflex="true" style="background:#8F6E46;color:white"></button>
 			</vbox>			
 		</vbox>
 	</div>
