@@ -2,6 +2,7 @@ package com.guia.gestion.login;
 
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.Init;
+import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.util.Clients;
 
 import com.coreweb.domain.Usuario;
@@ -26,6 +27,7 @@ public class LoginViewModel {
 			rr.saveObject(nvoUsuario, "");
 			rr.saveObject(nvoPropietario, "");
 			Clients.showNotification("Registro realizado correctamente..");
+			Executions.sendRedirect("/gestion/menuprincipal.zul");
 		} else {
 			Clients.showNotification(this.mensaje, Clients.NOTIFICATION_TYPE_ERROR, null, null, 0);
 		}

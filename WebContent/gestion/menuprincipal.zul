@@ -1,0 +1,33 @@
+<?page title="GuiaCeramicaTobati" contentType="text/html;charset=UTF-8"?>
+<?link rel="icon" type="image/x-icon" href="images/icon.png"?>
+
+<window mode="modal" border="normal" width="99.5%" height="99.5%">
+	
+	<hbox hflex="true" vflex="true">
+	
+		<vbox vflex="true" width="270px" align="center" style="margin:40px">
+			<label class="label label-default" style="background:#8F6E46;color:white;font-size:15pt" hflex="true">Cerámicas Registradas</label>
+			<listbox vflex="true" width="250px">
+		</listbox>
+		</vbox>
+		
+		<vbox pack="center" align="center" hflex="true" height="100%">
+			<image src="/images/logo.png"></image>
+			<vbox style="margin:50px">
+				<vbox>
+					<button sclass="btn-primary btn-lg"
+						label="Datos de la Cerámica" width="400px" height="70px" 
+						style="background:#8F6E46;color:white"/>
+					<div height="10px" />
+					<button sclass="btn-success btn-lg"
+						label="Agregar / Editar Artículos" width="400px" height="70px"
+						style="background:#8F6E46;color:white"/>
+				</vbox>
+
+			</vbox>
+
+		</vbox>
+
+	</hbox>
+	
+</window>
