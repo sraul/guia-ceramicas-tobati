@@ -1,14 +1,27 @@
 <?page title="GuiaCeramicaTobati" contentType="text/html;charset=UTF-8"?>
 <?link rel="icon" type="image/x-icon" href="images/icon.png"?>
 
-<window mode="modal" border="normal" width="99.5%" height="99.5%">
+<window mode="modal" border="normal" width="99.5%" height="99.5%"
+	apply="org.zkoss.bind.BindComposer"
+	viewModel="@id('vm') @init('com.guia.gestion.menu.MenuPrincipalViewModel')">
 	
 	<hbox hflex="true" vflex="true">
 	
 		<vbox vflex="true" width="270px" align="center" style="margin:40px">
 			<label class="label label-default" style="background:#8F6E46;color:white;font-size:15pt" hflex="true">Cerámicas Registradas</label>
-			<listbox vflex="true" width="250px">
-		</listbox>
+			<listbox vflex="true" width="250px"
+				model="@load(vm.ceramicas)">
+				<template name="model">
+					<listitem>
+						<listcell>
+							<hlayout valign="middle">
+								<image src="/images/ceramica_icon.png"></image>
+								<label value="@load(each.nombre)"></label>
+							</hlayout>
+						</listcell>
+					</listitem>
+				</template>
+			</listbox>
 		</vbox>
 		
 		<vbox pack="center" align="center" hflex="true" height="100%">

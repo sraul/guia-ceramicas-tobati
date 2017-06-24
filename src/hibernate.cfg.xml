@@ -22,6 +22,7 @@
 		<!-- ===== Hibernate propio del dominio ======= -->
 		
 		<mapping resource="com/guia/domain/Propietario.hbm.xml" />
+		<mapping resource="com/guia/domain/Ceramica.hbm.xml" />
 
 	</session-factory>
 

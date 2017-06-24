@@ -36,4 +36,12 @@ public class RegisterDomain extends Register {
 		
 		return list.size() > 0 ? list.get(0) : null;
 	}
+	
+	/**
+	 * @return la lista de ceramicas registradas..
+	 */
+	public List<Ceramica> getCeramicas() throws Exception {
+		String query = "select c from Ceramica c order by c.nombre";
+		return this.hql(query);
+	}
 }
