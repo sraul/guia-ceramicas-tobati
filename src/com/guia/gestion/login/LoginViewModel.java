@@ -7,6 +7,7 @@ import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.util.Clients;
 
 import com.coreweb.domain.Usuario;
+import com.guia.domain.Ceramica;
 import com.guia.domain.Propietario;
 import com.guia.domain.RegisterDomain;
 import com.guia.gestion.util.Config;
@@ -38,9 +39,21 @@ public class LoginViewModel {
 	public void realizarRegistro() throws Exception {
 		if (validarRegistro()) {
 			RegisterDomain rr = RegisterDomain.getInstance();
-			rr.saveObject(nvoUsuario, "");
+			rr.saveObject(this.nvoUsuario, "");
+			
+			Ceramica cm = new Ceramica();
+			cm.setNombre("SIN NOMBRE");
+			cm.setDireccion("SIN DIRECCION");
+			cm.setTelefono("SIN TELEFONO");
+			rr.saveObject(cm, "");
+			
+			// enlaza el propietario con el usuario y asigna una ceramica por defecto..
+			this.nvoPropietario.setUsuario(this.nvoUsuario);
+			this.nvoPropietario.setCeramica(cm);
 			rr.saveObject(nvoPropietario, "");
-			Clients.showNotification("Registro realizado correctamente..");
+			
+			this.guardarSesion(this.nvoUsuario);
+			
 			Executions.sendRedirect("/gestion/menuprincipal.zul");
 		} else {
 			Clients.showNotification(this.mensaje, Clients.NOTIFICATION_TYPE_ERROR, null, null, 0);
@@ -78,12 +91,20 @@ public class LoginViewModel {
 		}
 		
 		if (out == true) {
-			Sessions.getCurrent().setAttribute(Config.SESION_USUARIO, usuario);
-			Propietario prop = rr.getPropietarioByUsuario(usuario.getId());
-			Sessions.getCurrent().setAttribute(Config.SESION_PROPIETARIO, prop);
+			this.guardarSesion(usuario);
 		}
 		
 		return out;
+	}
+	
+	/**
+	 * guarda datos en la session..
+	 */
+	private void guardarSesion(Usuario usuario) throws Exception {
+		RegisterDomain rr = RegisterDomain.getInstance();
+		Sessions.getCurrent().setAttribute(Config.SESION_USUARIO, usuario);
+		Propietario prop = rr.getPropietarioByUsuario(usuario.getId());
+		Sessions.getCurrent().setAttribute(Config.SESION_PROPIETARIO, prop);
 	}
 	
 	
