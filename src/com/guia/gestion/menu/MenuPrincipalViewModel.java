@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.Init;
+import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.util.Clients;
 
@@ -22,6 +23,7 @@ public class MenuPrincipalViewModel {
 	}
 	
 	@Command
+	@NotifyChange("ceramicas")
 	public void guardarCeramica() throws Exception {
 		RegisterDomain rr = RegisterDomain.getInstance();
 		rr.saveObject(this.selectedCeramica, "sys");
