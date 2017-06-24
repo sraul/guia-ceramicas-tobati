@@ -49,7 +49,8 @@
 				<vbox>
 					<button sclass="btn-primary btn-lg"
 						label="Datos de la Cerámica" width="400px" height="70px" 
-						style="background:#8F6E46;color:white"/>
+						style="background:#8F6E46;color:white"
+						onClick='pop_crm.open(self, "start_before")'/>
 					<div height="10px" />
 					<button sclass="btn-success btn-lg"
 						label="Agregar / Editar Artículos" width="400px" height="70px"
@@ -61,6 +62,51 @@
 		</vbox>
 
 	</hbox>
+	
+	<popup id="pop_crm" style="border-radius:10px">
+		<grid height="250px" width="400px" style="border-radius:10px"> 
+			<columns>
+				<column width="35%"></column>
+				<column></column>
+			</columns>
+			<rows>
+				<row>
+					<label>NOMBRE:</label>
+					<textbox hflex="true" placeholder="NOMBRE DE LA CERÁMICA.."
+						value="@bind(vm.selectedCeramica.nombre)"></textbox>
+				</row>
+				<row>
+					<label>DIRECCIÓN:</label>
+					<textbox hflex="true" placeholder="DIRECCIÓN DE LA CERÁMICA.."
+						value="@bind(vm.selectedCeramica.direccion)"></textbox>
+				</row>
+				<row>
+					<label>TELÉFONO:</label>
+					<textbox hflex="true"
+						placeholder="TELÉFONO DE LA CERÁMICA.."
+						value="@bind(vm.selectedCeramica.telefono)"></textbox>
+				</row>
+				<row>
+					<label>LATITUD:</label>
+					<textbox hflex="true"></textbox>
+				</row>
+				<row>
+					<label>LONGITUD:</label>
+					<textbox hflex="true"></textbox>
+				</row>
+				<row>
+					<label>UBICACIÓN:</label>
+					<button iconSclass="z-icon-map-marker" sclass="btn-primary"
+						style="background:#8F6E46;color:white"></button>
+				</row>
+			</rows>
+		</grid>
+		<div height="5px"></div>
+		<button sclass="btn-primary"
+						label="Guardar Cambios" width="400px" 
+						style="background:#8F6E46;color:white"
+						onClick="@command('guardarCeramica')"/>
+	</popup>
 	
 	<style>
 		.subtitulo { color:#8F6E46; font-weight:bold; font-size: 16pt }
