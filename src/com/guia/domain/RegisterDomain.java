@@ -44,4 +44,19 @@ public class RegisterDomain extends Register {
 		String query = "select c from Ceramica c order by c.nombre";
 		return this.hql(query);
 	}
+	
+	public static void main(String[] args) {
+		try {
+			RegisterDomain rr = RegisterDomain.getInstance();
+			for (int i = 0; i < 10; i++) {
+				Ceramica c = new Ceramica();
+				c.setNombre("CERAMICA " + (i + 1));
+				c.setTelefono("TEL " + (i + 1));
+				c.setDireccion("DIRECCION " + (i + 1));
+				rr.saveObject(c, "sys");
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+	}
 }
