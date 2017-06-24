@@ -3,11 +3,13 @@ package com.guia.gestion.login;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.Init;
 import org.zkoss.zk.ui.Executions;
+import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.util.Clients;
 
 import com.coreweb.domain.Usuario;
 import com.guia.domain.Propietario;
 import com.guia.domain.RegisterDomain;
+import com.guia.gestion.util.Config;
 
 public class LoginViewModel {
 	
@@ -69,9 +71,16 @@ public class LoginViewModel {
 		this.mensaje = "No se puede completar el registro debido a:";
 		
 		RegisterDomain rr = RegisterDomain.getInstance();
-		if (rr.getUsuario(this.user, this.password) == null) {
+		Usuario usuario = rr.getUsuario(this.user, this.password);
+		if ( usuario == null) {
 			out = false;
 			this.mensaje += "\n - Usuario o password incorrecto..";
+		}
+		
+		if (out == true) {
+			Sessions.getCurrent().setAttribute(Config.SESION_USUARIO, usuario);
+			Propietario prop = rr.getPropietarioByUsuario(usuario.getId());
+			Sessions.getCurrent().setAttribute(Config.SESION_PROPIETARIO, prop);
 		}
 		
 		return out;

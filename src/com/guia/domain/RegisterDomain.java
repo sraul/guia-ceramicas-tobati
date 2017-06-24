@@ -45,16 +45,25 @@ public class RegisterDomain extends Register {
 		return this.hql(query);
 	}
 	
+	/**
+	 * @return el propietario a partir del usuario..
+	 */
+	public Propietario getPropietarioByUsuario(long idUsuario) throws Exception {
+		String query = "select p from Propietario p where p.usuario.id = "+ idUsuario +"";
+		List<Propietario> list = this.hql(query);
+		
+		return list.size() > 0 ? list.get(0) : null;
+	}
+	
 	public static void main(String[] args) {
 		try {
 			RegisterDomain rr = RegisterDomain.getInstance();
-			for (int i = 0; i < 10; i++) {
-				Ceramica c = new Ceramica();
-				c.setNombre("CERAMICA " + (i + 1));
-				c.setTelefono("TEL " + (i + 1));
-				c.setDireccion("DIRECCION " + (i + 1));
-				rr.saveObject(c, "sys");
-			}
+			Propietario prop = (Propietario) rr.getObject(Propietario.class.getName(), 1);
+			prop.setCeramica(rr.getCeramicas().get(0));
+			prop.setUsuario(rr.getAllUsuarios().get(0));
+			
+			rr.saveObject(prop, "sys");
+						
 		} catch (Exception e) {
 			// TODO: handle exception
 		}

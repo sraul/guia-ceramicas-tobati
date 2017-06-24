@@ -24,6 +24,25 @@
 			</listbox>
 		</vbox>
 		
+		<vlayout style="text-align:left;margin-top:40px">
+			<label
+				value="@load(vm.propietarioLogueado.ceramica.nombre)"
+				sclass="subtitulo">
+			</label>
+			<hlayout>
+				<label sclass="subtitulo_">DIRECCIÓN:</label>
+				<label sclass="subtitulo_" value="@load(vm.propietarioLogueado.ceramica.direccion)"></label>
+			</hlayout>
+			<hlayout>
+				<label sclass="subtitulo_">TELÉFONO:</label>
+				<label sclass="subtitulo_" value="@load(vm.propietarioLogueado.ceramica.telefono)"></label>
+			</hlayout>
+			<hlayout>
+				<label sclass="subtitulo_">PROPIETARIO:</label>
+				<label sclass="subtitulo_" value="@load(vm.propietarioLogueado.nombre)"></label>
+			</hlayout>
+		</vlayout>
+
 		<vbox pack="center" align="center" hflex="true" height="100%">
 			<image src="/images/logo.png"></image>
 			<vbox style="margin:50px">
@@ -42,5 +61,10 @@
 		</vbox>
 
 	</hbox>
+	
+	<style>
+		.subtitulo { color:#8F6E46; font-weight:bold; font-size: 16pt }
+		.subtitulo_ { color:#8F6E46 }
+	</style>
 	
 </window>

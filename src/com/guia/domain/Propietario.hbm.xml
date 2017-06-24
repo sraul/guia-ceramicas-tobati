@@ -14,5 +14,11 @@
 		<property name="cedula"/>
 		<property name="telefono"/>		
 		
+		<many-to-one name="ceramica" class="com.guia.domain.Ceramica"
+			column="idceramica" lazy="false"/>	
+		
+		<many-to-one name="usuario" class="com.coreweb.domain.Usuario"
+			column="idusuario" lazy="false"/>
+		
 	</class>
 </hibernate-mapping>
