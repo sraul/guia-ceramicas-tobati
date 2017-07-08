@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//hibernate/hibernate Mapping DTD 3.0//EN"
+        "classpath://org/hibernate/hibernate-mapping-3.0.dtd"
+        [ <!ENTITY hibernate-domain SYSTEM "classpath://com/coreweb/hibernate-domain.hbm.xml"> ]>
+
+<hibernate-mapping>
+
+	<class name="com.guia.domain.Articulo" table="articulo">
+
+		&hibernate-domain; 
+		
+		<property name="nombre"/>
+		<property name="descripcion"/>
+		<property name="precio"/>
+		<property name="imagen"/>
+		
+	</class>
+</hibernate-mapping>

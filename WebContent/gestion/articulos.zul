@@ -1,0 +1,92 @@
+<?page title="GuiaCeramicaTobati" contentType="text/html;charset=UTF-8"?>
+<?link rel="icon" type="image/x-icon" href="/images/icon.png"?>
+<window mode="modal" border="normal" width="99.5%" height="99.5%"
+	apply="org.zkoss.bind.BindComposer"
+	viewModel="@id('vm') @init('com.guia.gestion.articulos.ArticulosViewModel')">
+
+	<hbox style="margin:20px 0px 0px 20px">
+		<button sclass="btn-primary" label="Agregar" width="150px"
+			style="background:#8F6E46;color:white" 
+			onClick='pop_add.open(self, "after_end")'/>
+		<space></space>
+		<button sclass="btn-primary" label="Modificar" width="150px"
+			style="background:#8F6E46;color:white" />
+		<space></space>
+		<button sclass="btn-primary" label="Eliminar" width="150px"
+			style="background:#8F6E46;color:white" />
+	</hbox>
+	
+	<hbox vflex="true">
+		
+		<listbox vflex="true" hflex="true" style="border-radius:8px;margin:10px 10px 20px 20px"
+			emptyMessage="SIN ARTICULOS.."
+			model="@load(vm.selectedCeramica.articulos)"
+			selectedItem="@bind(vm.selectedArticulo)">
+			<listhead style="text-align:center">
+				<listheader label="Nombre"></listheader>
+				<listheader label="Descripción"></listheader>
+				<listheader label="Precio Gs." style="text-align:center"
+					align="right"></listheader>
+			</listhead>
+			<template name="model">
+				<listitem>
+					<listcell label="@load(each.nombre)"></listcell>
+					<listcell label="@load(each.descripcion)"></listcell>
+					<listcell label="@load(each.precio) @converter('formattedNumber', format='###,###,##0')"></listcell>
+				</listitem>
+			</template>
+			<listfoot>
+				<listfooter>
+					<hlayout>
+						<label value="@load(vm.selectedCeramica.articulos.size())"></label>
+						<label>ítems</label>
+					</hlayout>
+				</listfooter>
+			</listfoot>
+		</listbox>
+		
+		<vlayout hflex="true" vflex="true" style="padding:10px 20px 20px 20px">
+			
+			<image vflex="true" hflex="true" style="border:1px solid #cfcfcf;border-radius: 8px"
+				src="@load(vm.selectedArticulo.imageSRC)"></image>
+			<button sclass="btn-primary" label="Subir Imagen" width="150px"
+				style="background:#8F6E46;color:white;font-size:10pt" 
+				upload="true"
+				onUpload="@command('uploadImage', event = event)"/>
+		</vlayout>
+	
+	</hbox>
+
+	<popup id="pop_add" style="border-radius:10px">
+		<grid height="150px" width="400px" style="border-radius:10px"> 
+			<columns>
+				<column width="35%"></column>
+				<column></column>
+			</columns>
+			<rows>
+				<row>
+					<label>NOMBRE:</label>
+					<textbox hflex="true" placeholder="NOMBRE DEL ARTÍCULO.."
+						value="@bind(vm.nuevoArticulo.nombre)"></textbox>
+				</row>
+				<row>
+					<label>DESCRIPCIÓN:</label>
+					<textbox hflex="true" placeholder="DESCRIPCIÓN DEL ARTÍCULO.."
+						value="@bind(vm.nuevoArticulo.descripcion)"></textbox>
+				</row>
+				<row>
+					<label>PRECIO Gs.:</label>
+					<doublebox hflex="true"
+						placeholder="PRECIO DEL ARTÍCULO.."
+							value="@bind(vm.nuevoArticulo.precio)"></doublebox>
+				</row>
+			</rows>
+		</grid>
+		<div height="5px"></div>
+		<button sclass="btn-primary"
+						label="Agregar Artículo" width="400px" 
+						style="background:#8F6E46;color:white"
+						onClick="@command('agregarArticulo', comp=pop_add)"/>
+	</popup>
+
+</window>

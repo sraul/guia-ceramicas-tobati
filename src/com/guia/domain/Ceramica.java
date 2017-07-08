@@ -1,16 +1,21 @@
 package com.guia.domain;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import com.coreweb.domain.Domain;
 
 @SuppressWarnings("serial")
 public class Ceramica extends Domain {
 
-	private String nombre;
-	private String direccion;
-	private String telefono;
+	private String nombre = "";
+	private String direccion = "";
+	private String telefono = "";
 	
 	private double latitud;
 	private double longitud;
+	
+	private Set<Articulo> articulos = new HashSet<Articulo>();
 	
 	@Override
 	public int compareTo(Object arg0) {
@@ -55,6 +60,14 @@ public class Ceramica extends Domain {
 
 	public void setLongitud(double longitud) {
 		this.longitud = longitud;
+	}
+
+	public Set<Articulo> getArticulos() {
+		return articulos;
+	}
+
+	public void setArticulos(Set<Articulo> articulos) {
+		this.articulos = articulos;
 	}
 
 }

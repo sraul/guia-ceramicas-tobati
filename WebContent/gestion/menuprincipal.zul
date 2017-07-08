@@ -1,5 +1,5 @@
 <?page title="GuiaCeramicaTobati" contentType="text/html;charset=UTF-8"?>
-<?link rel="icon" type="image/x-icon" href="images/icon.png"?>
+<?link rel="icon" type="image/x-icon" href="/images/icon.png"?>
 
 <window mode="modal" border="normal" width="99.5%" height="99.5%"
 	apply="org.zkoss.bind.BindComposer"
@@ -7,7 +7,9 @@
 	
 	<hbox hflex="true" vflex="true">
 	
-		<vbox vflex="true" width="270px" align="center" style="margin:40px">
+		<!-- LISTA DE CERAMICAS -->
+		
+		<vbox vflex="true" width="270px" align="center" style="margin:20px">
 			<label class="label label-default" style="background:#8F6E46;color:white;font-size:15pt" hflex="true">Cerámicas Registradas</label>
 			<listbox vflex="true" width="250px"
 				model="@load(vm.ceramicas)">
@@ -23,27 +25,33 @@
 				</template>
 			</listbox>
 		</vbox>
-		
-		<vlayout style="text-align:left;margin-top:40px">
-			<label
-				value="@load(vm.propietarioLogueado.ceramica.nombre)"
-				sclass="subtitulo">
-			</label>
-			<hlayout>
-				<label sclass="subtitulo_">DIRECCIÓN:</label>
-				<label sclass="subtitulo_" value="@load(vm.propietarioLogueado.ceramica.direccion)"></label>
-			</hlayout>
-			<hlayout>
-				<label sclass="subtitulo_">TELÉFONO:</label>
-				<label sclass="subtitulo_" value="@load(vm.propietarioLogueado.ceramica.telefono)"></label>
-			</hlayout>
-			<hlayout>
-				<label sclass="subtitulo_">PROPIETARIO:</label>
-				<label sclass="subtitulo_" value="@load(vm.propietarioLogueado.nombre)"></label>
-			</hlayout>
-		</vlayout>
 
 		<vbox pack="center" align="center" hflex="true" height="100%">
+			<vlayout style="text-align:left;margin-top:40px">
+				<label
+					value="@load(vm.propietarioLogueado.ceramica.nombre)"
+					sclass="subtitulo">
+				</label>
+				<hlayout>
+					<label sclass="subtitulo_">DIRECCIÓN:</label>
+					<label sclass="subtitulo_"
+						value="@load(vm.propietarioLogueado.ceramica.direccion)">
+					</label>
+				</hlayout>
+				<hlayout>
+					<label sclass="subtitulo_">TELÉFONO:</label>
+					<label sclass="subtitulo_"
+						value="@load(vm.propietarioLogueado.ceramica.telefono)">
+					</label>
+				</hlayout>
+				<hlayout>
+					<label sclass="subtitulo_">PROPIETARIO:</label>
+					<label sclass="subtitulo_"
+						value="@load(vm.propietarioLogueado.nombre)">
+					</label>
+				</hlayout>
+			</vlayout>
+
 			<image src="/images/logo.png"></image>
 			<vbox style="margin:50px">
 				<vbox>
@@ -54,11 +62,20 @@
 					<div height="10px" />
 					<button sclass="btn-success btn-lg"
 						label="Agregar / Editar Artículos" width="400px" height="70px"
-						style="background:#8F6E46;color:white"/>
+						style="background:#8F6E46;color:white"
+						onClick="@command('verArticulos')"/>
 				</vbox>
 
 			</vbox>
-
+		</vbox>
+		
+		<!-- LISTA DE PEDIDOS PENDIENTES -->
+		
+		<vbox vflex="true" width="270px" align="center" style="margin:40px">
+			<label class="label label-default" style="background:#8F6E46;color:white;font-size:15pt" hflex="true">Pedidos Pendientes</label>
+			<listbox vflex="true" width="250px"
+				emptyMessage="SIN PEDIDOS PENDIENTES..">
+			</listbox>
 		</vbox>
 
 	</hbox>

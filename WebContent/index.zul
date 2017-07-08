@@ -10,9 +10,11 @@
 			<image src="/images/logo.png"></image>
 			<vbox id="vb_log" width="200px">
 				<div height="10px"></div>
-				<textbox placeholder="Usuario.." hflex="true" value="@bind(vm.user)"></textbox>
+				<textbox placeholder="Usuario.." hflex="true" value="@bind(vm.user)"
+					onOK="@command('loguearse')"></textbox>
 				<div height="10px"></div>
-				<textbox placeholder="Password.." hflex="true" type="password" value="@bind(vm.password)"></textbox>
+				<textbox placeholder="Password.." hflex="true" type="password" value="@bind(vm.password)"
+					onOK="@command('loguearse')"></textbox>
 				<div height="10px"></div>
 				<button label="Ingresar" hflex="true" style="background:#8F6E46;color:white"
 					onClick="@command('loguearse')"></button>
