@@ -5,14 +5,29 @@
 	apply="org.zkoss.bind.BindComposer"
 	viewModel="@id('vm') @init('com.guia.gestion.menu.MenuPrincipalViewModel')">
 	
-	<hbox hflex="true" vflex="true">
+	<!-- CABECERA -->
+	<hbox height="50px" width="100%" sclass="cabecera rounded"
+		align="center">
+
+		<button sclass="btn-success" iconSclass="z-icon-arrow-left"
+			onClick="@command('salir')"
+			style="background-color:White; color:#8F6E46; margin-left: 15px">
+			Salir..
+		</button>
+		<label sclass="titulo">Menú Principal</label>
+		<div hflex="true" />
+		<div width="20px"></div>
+	</hbox>
+	
+	<hbox width="100%" vflex="true">
 	
 		<!-- LISTA DE CERAMICAS -->
 		
 		<vbox vflex="true" width="270px" align="center" style="margin:20px">
 			<label class="label label-default" style="background:#8F6E46;color:white;font-size:15pt" hflex="true">Cerámicas Registradas</label>
 			<listbox vflex="true" width="250px"
-				model="@load(vm.ceramicas)">
+				model="@load(vm.ceramicas)"
+				style="border-radius:8px">
 				<template name="model">
 					<listitem>
 						<listcell>
@@ -53,31 +68,50 @@
 			</vlayout>
 
 			<image src="/images/logo.png"></image>
-			<vbox style="margin:50px">
-				<vbox>
+			<vbox>
+				<hbox>
 					<button sclass="btn-primary btn-lg"
-						label="Datos de la Cerámica" width="400px" height="70px" 
+						label="Datos de la Cerámica" width="300px" height="50px" 
 						style="background:#8F6E46;color:white"
 						onClick='pop_crm.open(self, "start_before")'/>
-					<div height="10px" />
+					<div width="10px" />
 					<button sclass="btn-success btn-lg"
-						label="Agregar / Editar Artículos" width="400px" height="70px"
+						label="Agregar / Editar Artículos" width="300px" height="50px"
 						style="background:#8F6E46;color:white"
 						onClick="@command('verArticulos')"/>
-				</vbox>
-
+				</hbox>
 			</vbox>
 		</vbox>
 		
 		<!-- LISTA DE PEDIDOS PENDIENTES -->
 		
-		<vbox vflex="true" width="270px" align="center" style="margin:40px">
+		<vbox vflex="true" width="270px" align="center" style="margin:20px">
 			<label class="label label-default" style="background:#8F6E46;color:white;font-size:15pt" hflex="true">Pedidos Pendientes</label>
 			<listbox vflex="true" width="250px"
-				emptyMessage="SIN PEDIDOS PENDIENTES..">
+				emptyMessage="SIN PEDIDOS PENDIENTES.."
+				style="border-radius:8px">
 			</listbox>
 		</vbox>
 
+	</hbox>
+	
+	<!-- PIE DE PAGINA -->
+	<hbox height="50px" width="100%" sclass="cabecera rounded"
+		align="center">
+		<div sclass="titulo" width="100%"
+			style="align:center; padding:5px;">
+			<image src="/images/logo.png" width="90px"
+				height="50px" style="border-radius:8px">
+			</image>
+		</div>
+		<vlayout>
+			<label sclass="pie">
+				Aplicación móvil/web de Guía y Geolocalización de Cerámicas
+			</label>
+			<label sclass="pie">
+				de la Ciudad de Tobatí Año 2017
+			</label>
+		</vlayout>
 	</hbox>
 	
 	<popup id="pop_crm" style="border-radius:10px">
@@ -128,6 +162,12 @@
 	<style>
 		.subtitulo { color:#8F6E46; font-weight:bold; font-size: 16pt }
 		.subtitulo_ { color:#8F6E46 }
+		.rounded { -webkit-border-radius: 5px; -moz-border-radius: 5px;
+		border-radius: 5px; } .cabecera { background-color:#8F6E46; }
+		.titulo { text-overflow: ellipsis; white-space: nowrap;
+		color:white; font-weight: bold; font-size: 12pt; margin-left:
+		500px; } .pie{ font-size:12px; color:white; white-space: nowrap;
+		text-overflow: ellipsis; padding-left:5px }
 	</style>
 	
 </window>

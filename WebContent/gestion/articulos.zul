@@ -3,6 +3,20 @@
 <window mode="modal" border="normal" width="99.5%" height="99.5%"
 	apply="org.zkoss.bind.BindComposer"
 	viewModel="@id('vm') @init('com.guia.gestion.articulos.ArticulosViewModel')">
+	
+	<!-- CABECERA -->
+	<hbox height="50px" width="100%" sclass="cabecera rounded"
+		align="center">
+
+		<button sclass="btn-success" iconSclass="z-icon-arrow-left"
+			href="menuprincipal.zul"
+			style="background-color:White; color:#8F6E46; margin-left: 15px">
+			Atrás..
+		</button>
+		<label sclass="titulo">Administrar Artículos</label>
+		<div hflex="true" />
+		<div width="20px"></div>
+	</hbox>
 
 	<hbox style="margin:20px 0px 0px 20px">
 		<button sclass="btn-primary" label="Agregar" width="150px"
@@ -10,10 +24,14 @@
 			onClick='pop_add.open(self, "after_end")'/>
 		<space></space>
 		<button sclass="btn-primary" label="Modificar" width="150px"
-			style="background:#8F6E46;color:white" />
+			style="background:#8F6E46;color:white" 
+			disabled="@load(vm.selectedArticulo eq null)"
+			onClick='pop_upd.open(self, "after_end")'/>
 		<space></space>
 		<button sclass="btn-primary" label="Eliminar" width="150px"
-			style="background:#8F6E46;color:white" />
+			style="background:#8F6E46;color:white" 
+			disabled="@load(vm.selectedArticulo eq null)"
+			onClick="@command('eliminarArticulo')"/>
 	</hbox>
 	
 	<hbox vflex="true">
@@ -49,13 +67,35 @@
 			
 			<image vflex="true" hflex="true" style="border:1px solid #cfcfcf;border-radius: 8px"
 				src="@load(vm.selectedArticulo.imageSRC)"></image>
-			<button sclass="btn-primary" label="Subir Imagen" width="150px"
+			<button id="test" sclass="btn-primary" label="Subir Imagen" width="150px"
 				style="background:#8F6E46;color:white;font-size:10pt" 
 				upload="true"
-				onUpload="@command('uploadImage', event = event)"/>
+				onUpload="@command('uploadImage', event = event)"
+				disabled="@load(vm.selectedArticulo eq null)"/>
 		</vlayout>
 	
 	</hbox>
+	
+	<!-- PIE DE PAGINA -->
+	<hbox height="50px" width="100%" sclass="cabecera rounded"
+		align="center">
+		<div sclass="titulo" width="100%"
+			style="align:center; padding:5px;">
+			<image src="/images/logo.png" width="90px"
+				height="50px" style="border-radius:8px">
+			</image>
+		</div>
+		<vlayout>
+			<label sclass="pie">
+				Aplicación móvil/web de Guía y Geolocalización de Cerámicas
+			</label>
+			<label sclass="pie">
+				de la Ciudad de Tobatí Año 2017
+			</label>
+		</vlayout>
+	</hbox>
+
+	<!-- POPUP AGREGAR ARTICULO -->
 
 	<popup id="pop_add" style="border-radius:10px">
 		<grid height="150px" width="400px" style="border-radius:10px"> 
@@ -78,7 +118,9 @@
 					<label>PRECIO Gs.:</label>
 					<doublebox hflex="true"
 						placeholder="PRECIO DEL ARTÍCULO.."
-							value="@bind(vm.nuevoArticulo.precio)"></doublebox>
+							value="@bind(vm.nuevoArticulo.precio)"
+							format="###,###,##0"
+							style="text-align:right"></doublebox>
 				</row>
 			</rows>
 		</grid>
@@ -88,5 +130,49 @@
 						style="background:#8F6E46;color:white"
 						onClick="@command('agregarArticulo', comp=pop_add)"/>
 	</popup>
+	
+	<!-- POPUP MODIFICAR ARTICULO -->
 
+	<popup id="pop_upd" style="border-radius:10px">
+		<grid height="150px" width="400px" style="border-radius:10px"> 
+			<columns>
+				<column width="35%"></column>
+				<column></column>
+			</columns>
+			<rows>
+				<row>
+					<label>NOMBRE:</label>
+					<textbox hflex="true" placeholder="NOMBRE DEL ARTÍCULO.."
+						value="@bind(vm.selectedArticulo.nombre)"></textbox>
+				</row>
+				<row>
+					<label>DESCRIPCIÓN:</label>
+					<textbox hflex="true" placeholder="DESCRIPCIÓN DEL ARTÍCULO.."
+						value="@bind(vm.selectedArticulo.descripcion)"></textbox>
+				</row>
+				<row>
+					<label>PRECIO Gs.:</label>
+					<doublebox hflex="true"
+						placeholder="PRECIO DEL ARTÍCULO.."
+							value="@bind(vm.selectedArticulo.precio)"
+							format="###,###,##0"
+							style="text-align:right"></doublebox>
+				</row>
+			</rows>
+		</grid>
+		<div height="5px"></div>
+		<button sclass="btn-primary"
+						label="Modificar Artículo" width="400px" 
+						style="background:#8F6E46;color:white"
+						onClick="@command('modificarArticulo', comp=pop_upd)"/>
+	</popup>
+
+	<style>
+		.rounded { -webkit-border-radius: 5px; -moz-border-radius: 5px;
+		border-radius: 5px; } .cabecera { background-color:#8F6E46; }
+		.titulo { text-overflow: ellipsis; white-space: nowrap;
+		color:white; font-weight: bold; font-size: 12pt; margin-left:
+		500px; } .pie{ font-size:12px; color:white; white-space: nowrap;
+		text-overflow: ellipsis; padding-left:5px }
+	</style>
 </window>

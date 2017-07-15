@@ -5,6 +5,7 @@ import java.util.List;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.Init;
 import org.zkoss.bind.annotation.NotifyChange;
+import org.zkoss.zhtml.Messagebox;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.util.Clients;
@@ -20,7 +21,11 @@ public class MenuPrincipalViewModel {
 	
 	@Init
 	public void init() {
-		this.selectedCeramica = this.getPropietarioLogueado().getCeramica();
+		if (this.getPropietarioLogueado() == null) {
+			Executions.sendRedirect("/");
+		} else {
+			this.selectedCeramica = this.getPropietarioLogueado().getCeramica();
+		}
 	}
 	
 	@Command
@@ -34,6 +39,14 @@ public class MenuPrincipalViewModel {
 	@Command
 	public void verArticulos() {
 		Executions.sendRedirect("articulos.zul");
+	}
+	
+	@Command
+	public void salir() {
+		if (Messagebox.show("Esta seguro que desea Salir del Menu Principal?", "Question",
+				Messagebox.OK | Messagebox.CANCEL, Messagebox.QUESTION) == Messagebox.OK) {
+			Executions.sendRedirect("/");
+		}		
 	}
 	
 	/**

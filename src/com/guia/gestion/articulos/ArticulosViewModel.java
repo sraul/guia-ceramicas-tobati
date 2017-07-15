@@ -9,11 +9,13 @@ import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.Init;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.io.Files;
+import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.event.UploadEvent;
 import org.zkoss.zk.ui.util.Clients;
 import org.zkoss.zul.Popup;
 
+import com.coreweb.util.Misc;
 import com.guia.domain.Articulo;
 import com.guia.domain.Ceramica;
 import com.guia.domain.Propietario;
@@ -29,7 +31,11 @@ public class ArticulosViewModel {
 	
 	@Init
 	public void init() {
-		this.selectedCeramica = this.getPropietarioLogueado().getCeramica();
+		if (this.getPropietarioLogueado() == null) {
+			Executions.sendRedirect("/");
+		} else {
+			this.selectedCeramica = this.getPropietarioLogueado().getCeramica();
+		}
 	}
 	
 	@Command
@@ -40,7 +46,32 @@ public class ArticulosViewModel {
 		rr.saveObject(this.selectedCeramica, "sys");
 		comp.close();
 		this.nuevoArticulo = new Articulo();
+		this.selectedArticulo = null;
 		Clients.showNotification("REGISTRO AGREGADO..");
+	}
+	
+	@Command
+	@NotifyChange("*")
+	public void modificarArticulo(@BindingParam("comp") Popup comp) throws Exception {
+		RegisterDomain rr = RegisterDomain.getInstance();
+		rr.saveObject(this.selectedArticulo, "sys");
+		this.selectedArticulo = null;
+		comp.close();
+		Clients.showNotification("REGISTRO MODIFICADO..");
+	}
+	
+	@Command
+	@NotifyChange("*")
+	public void eliminarArticulo() throws Exception {
+		Misc misc = new Misc();
+		if (!misc.mensajeSiNo("Desea eliminar el registro seleccionado..?")) {
+			return;
+		}
+		this.selectedCeramica.getArticulos().remove(this.selectedArticulo);
+		RegisterDomain rr = RegisterDomain.getInstance();
+		rr.deleteObject(this.selectedArticulo);
+		this.selectedArticulo = null;
+		Clients.showNotification("REGISTRO ELIMINADO..");
 	}
 	
 	@Command
