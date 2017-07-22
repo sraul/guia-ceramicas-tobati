@@ -1,0 +1,35 @@
+<div
+	apply="org.zkoss.bind.BindComposer"
+	viewModel="@id('vm') @init('com.guia.mobile.CeramicasMobileViewModel')"
+	style="border: solid 1px" vflex="true">
+
+	<vbox vflex="true" hflex="true" align="center" style="margin:20px">
+			<label class="label label-default" style="background:#8F6E46;color:white;font-size:15pt" hflex="true">Cerámicas Registradas</label>
+			<listbox vflex="true" hflex="true"
+				model="@load(vm.ceramicas)"
+				style="border-radius:8px">
+				<template name="model">
+					<listitem>
+						<listcell>
+							<hlayout valign="middle">
+								<image src="/images/ceramica_icon.png"></image>
+								<label value="@load(each.nombre)"></label>
+							</hlayout>
+						</listcell>
+					</listitem>
+				</template>
+			</listbox>
+		</vbox>
+		
+		<style>
+		.subtitulo { color:#8F6E46; font-weight:bold; font-size: 16pt }
+		.subtitulo_ { color:#8F6E46 }
+		.rounded { -webkit-border-radius: 5px; -moz-border-radius: 5px;
+		border-radius: 5px; } .cabecera { background-color:#8F6E46; }
+		.titulo { text-overflow: ellipsis; white-space: nowrap;
+		color:white; font-weight: bold; font-size: 12pt; margin-left:
+		500px; } .pie{ font-size:12px; color:white; white-space: nowrap;
+		text-overflow: ellipsis; padding-left:5px }
+		</style>
+
+</div>
