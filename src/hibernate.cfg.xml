@@ -24,7 +24,9 @@
 		<mapping resource="com/guia/domain/Propietario.hbm.xml" />
 		<mapping resource="com/guia/domain/Ceramica.hbm.xml" />
 		<mapping resource="com/guia/domain/Articulo.hbm.xml" />
-
+		<mapping resource="com/guia/domain/Pedido.hbm.xml" />
+		<mapping resource="com/guia/domain/PedidoDetalle.hbm.xml" />
+		
 	</session-factory>
 
 </hibernate-configuration>

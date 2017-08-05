@@ -89,7 +89,11 @@
 			<label class="label label-default" style="background:#8F6E46;color:white;font-size:15pt" hflex="true">Pedidos Pendientes</label>
 			<listbox vflex="true" width="250px"
 				emptyMessage="SIN PEDIDOS PENDIENTES.."
-				style="border-radius:8px">
+				style="border-radius:8px"
+				model="@load(vm.pedidos)">
+				<template name="model">
+					<listitem label="@load(each.numero)"/>
+				</template>
 			</listbox>
 		</vbox>
 

@@ -1,25 +1,176 @@
 <div
 	apply="org.zkoss.bind.BindComposer"
 	viewModel="@id('vm') @init('com.guia.mobile.CeramicasMobileViewModel')"
-	style="border: solid 1px" vflex="true">
+	vflex="true">
 
-	<vbox vflex="true" hflex="true" align="center" style="margin:20px">
-			<label class="label label-default" style="background:#8F6E46;color:white;font-size:15pt" hflex="true">Cerámicas Registradas</label>
+	<vbox id="vb_cer" vflex="true" hflex="true" align="center" style="margin:20px">
+			<label class="label label-default" 
+				style="background:#8F6E46;color:white;font-size:50pt" 
+				hflex="true">Cerámicas de Tobatí</label>
+			<space></space><space></space>
 			<listbox vflex="true" hflex="true"
 				model="@load(vm.ceramicas)"
-				style="border-radius:8px">
+				style="border-radius:8px"
+				selectedItem="@bind(vm.selectedCeramica)">
+				<listhead>
+					<listheader width="15%" align="center"></listheader>
+					<listheader></listheader>
+				</listhead>
 				<template name="model">
 					<listitem>
 						<listcell>
-							<hlayout valign="middle">
-								<image src="/images/ceramica_icon.png"></image>
-								<label value="@load(each.nombre)"></label>
-							</hlayout>
+							<image src="/images/ceramica_icon.png" vflex="true"></image>
 						</listcell>
+						<listcell label="@load(each.nombre)" />
 					</listitem>
 				</template>
 			</listbox>
+			
+			<button mold="bs" sclass="btn-primary btn-lg" hflex="true"
+			iconSclass="z-icon-check"
+			label=" Ver Articulos" height="150px" style="font-size:30pt;background:#8F6E46;color:white"
+			dir="normal" 
+			disabled="@load(vm.selectedCeramica eq null)"
+			onClick='vb_cer.setVisible(false); vb_art.setVisible(true)'/>
+			
 		</vbox>
+		
+		<vbox id="vb_art" vflex="true" hflex="true" align="center" style="margin:20px"
+			visible="false">
+			<label class="label label-default" 
+				style="background:#8F6E46;color:white;font-size:50pt" 
+				hflex="true"
+				value="@load(vm.selectedCeramica.nombre)"></label>
+			<space></space><space></space>
+			<div style="text-align:left">
+				<label style="text-align:left;font-size:38pt">SELECCIONE UN ARTÍCULO..</label>
+			</div>
+			<listbox vflex="true" hflex="true"
+				model="@load(vm.selectedCeramica.articulos)"
+				style="border-radius:8px"
+				selectedItem="@bind(vm.selectedArticulo)"
+				onSelect="@command('setArticulo')">
+				<listhead>
+					<listheader width="20%" align="center"></listheader>
+					<listheader></listheader>
+				</listhead>
+				<template name="model">
+					<listitem>
+						<listcell>
+							<image src="@load(each.imageSRC)" height="120px"></image>
+						</listcell>
+						<listcell label="@load(each.nombre)" />
+					</listitem>
+				</template>
+			</listbox>
+			
+			<button mold="bs" sclass="btn-primary btn-lg" hflex="true"
+			iconSclass="z-icon-check"
+			label=" SIGUIENTE PASO" height="150px" style="font-size:30pt;background:#8F6E46;color:white"
+			dir="normal" 
+			onClick="vb_art.setVisible(false);vb_ped.setVisible(true)"/>
+			
+		</vbox>
+		
+		<vbox id="vb_ped" vflex="true" hflex="true" style="margin:20px"
+			visible="false">
+			
+			<div style="border-bottom:solid 1px">
+				<hlayout>
+					<label value="@load(vm.selectedArticulo.nombre)"
+						sclass="mobile" />
+				</hlayout>
+			</div>
+			<space></space>
+			<div style="text-align:center">
+				<image height="300px" src="@load(vm.selectedArticulo.imageSRC)"
+					onClick="pop_img.open(self)"></image>
+			</div>
+			<label value="Cantidad" sclass="mobile" />
+			<intbox hflex="true" style="text-align:right"
+				value="@bind(vm.selectedDetalle.cantidad)" instant="true" format="###,###,###"></intbox>
+			<space></space>
+			<label value="Precio" sclass="mobile" />
+			<doublebox style="text-align:right;font-weight:bold"
+				format="###,###,###,##0" hflex="true" 
+				readonly="true"
+				value="@load(vm.selectedArticulo.precio)"/>
+			<space></space>
+			<label value="Importe" sclass="mobile" />
+			<doublebox style="text-align:right;font-weight:bold"
+				format="###,###,###,##0" hflex="true" 
+				readonly="true"
+				value="@load(vm.selectedDetalle.importe)"/>
+			<space vflex="true"></space>	
+			<hlayout>
+				<button mold="bs" sclass="btn-primary btn-lg"
+					hflex="true" iconSclass="z-icon-plus" label=" Agregar Artículo"
+					height="150px" style="font-size:30pt;background:#8F6E46;color:white" dir="normal"
+					onClick="@command('agregarItem', comp1=vb_ped, comp2=vb_art)" />
+				<button mold="bs" sclass="btn-success btn-lg"
+					hflex="true" iconSclass="z-icon-check" label=" Generar Pedido"
+					height="150px" style="font-size:30pt;background:#8F6E46;color:white" dir="normal"
+					onClick="@command('generarPedido', comp1=vb_ped, comp2=vb_conf)" />
+			</hlayout>
+		</vbox>
+		
+		<vbox id="vb_conf" vflex="true" hflex="true" style="margin:20px"
+			visible="false">
+			
+			<div style="border-bottom:solid 1px">
+				<hlayout>
+					<label sclass="mobile">PEDIDO NRO.: </label>
+					<label value="@load(vm.numero)"
+						sclass="mobile" />
+				</hlayout>
+			</div>
+			<space></space>
+			<label value="Nombre y Apellido" sclass="mobile" />
+			<textbox hflex="true"
+				value="@bind(vm.selectedPedido.nombreApellido)"></textbox>
+			<space></space>
+			<label value="Cédula" sclass="mobile" />
+			<textbox hflex="true"
+				value="@bind(vm.selectedPedido.cedula)"></textbox>
+			<space></space>
+			<label value="Teléfono" sclass="mobile" />
+			<textbox hflex="true"
+				value="@bind(vm.selectedPedido.telefono)"></textbox>
+			<space></space>
+			<label value="Dirección" sclass="mobile" />
+			<textbox hflex="true"
+				value="@bind(vm.selectedPedido.direccion)"></textbox>
+			<space></space>
+			<label value="Detalle del Pedido" sclass="mobile" />
+			<listbox model="@load(vm.detalles)" rows="3">
+				<listhead>
+					<listheader></listheader>
+					<listheader align="right" width="60px"></listheader>
+					<listheader align="right" width="300px"></listheader>
+				</listhead>
+				<template name="model">
+					<listitem>
+						<listcell label="@load(each.articulo.nombre)"></listcell>
+						<listcell label="@load(each.cantidad)"></listcell>
+						<listcell label="@load(each.importe) @converter('formattedNumber', format='###,###,###')"></listcell>
+					</listitem>
+				</template>
+			</listbox>
+			<space vflex="true"></space>	
+			<hlayout id="hl_btn">
+				<button mold="bs" sclass="btn-primary btn-lg"
+					hflex="true" iconSclass="z-icon-times" label=" Cancelar"
+					height="150px" style="font-size:30pt;background:#8F6E46;color:white" dir="normal" />
+				<button mold="bs" sclass="btn-success btn-lg"
+					hflex="true" iconSclass="z-icon-check" label=" Confirmar"
+					height="150px" style="font-size:30pt;background:#8F6E46;color:white" dir="normal" 
+					onClick="@command('confirmarPedido', comp1=hl_btn, comp2=vb_conf)"/>
+			</hlayout>
+		</vbox>
+		
+		<popup id="pop_img">
+			<image src="@load(vm.selectedArticulo.imageSRC)" height="600px"></image>
+		</popup>
 		
 		<style>
 		.subtitulo { color:#8F6E46; font-weight:bold; font-size: 16pt }
@@ -30,6 +181,26 @@
 		color:white; font-weight: bold; font-size: 12pt; margin-left:
 		500px; } .pie{ font-size:12px; color:white; white-space: nowrap;
 		text-overflow: ellipsis; padding-left:5px }
+		.z-listheader-content { padding: 15px 20px; }
+		.z-listcell-content, .z-comboitem { text-overflow: ellipsis;
+		white-space: nowrap; line-height:100px; padding:20px; font-size:
+		40pt; } .z-datebox-button, .z-bandbox-button, .z-combobox-button
+		{ min-width: 150px; line-height: 100px; height:90px; font-size:
+		30pt; text-align: center; } .z-spinner-button,
+		.z-doublespinner-button { min-width: 150px; line-height: 45px;
+		height:90px; font-size: 30pt; text-align: center; }
+		.z-timebox-button>a, .z-spinner-button>a,
+		.z-doublespinner-button>a { width: 100%; height: 50%; }
+		.z-toolbarbutton-content { font-size: 30pt; vertical-align: top;
+		} .z-datebox-input, .z-combobox-input, .z-bandbox-input,
+		.z-spinner-input, .z-doublespinner-input { min-width: 150px;
+		height: 90px; font-size: 32pt; } .z-textbox, .z-decimalbox,
+		.z-intbox, .z-longbox, .z-doublebox { font-size: 32pt;
+		line-height:50px; height:90px; } .z-row-content { padding:50px;
+		} .z-calendar { font-size: 34pt; } .z-calendar-cell { font-size:
+		34pt; line-height: 120px; } .mobile { font-size: 36pt; }
+		.z-listbox-emptybody td{ font-size: 30pt }
+		.z-label {font-size: 40pt}
 		</style>
 
 </div>

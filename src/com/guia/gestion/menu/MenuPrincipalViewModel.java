@@ -1,5 +1,6 @@
 package com.guia.gestion.menu;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.zkoss.bind.annotation.Command;
@@ -11,6 +12,7 @@ import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.util.Clients;
 
 import com.guia.domain.Ceramica;
+import com.guia.domain.Pedido;
 import com.guia.domain.Propietario;
 import com.guia.domain.RegisterDomain;
 import com.guia.gestion.util.Config;
@@ -55,6 +57,17 @@ public class MenuPrincipalViewModel {
 	public List<Ceramica> getCeramicas() throws Exception {
 		RegisterDomain rr = RegisterDomain.getInstance();
 		return rr.getCeramicas();
+	}
+	
+	/**
+	 * @return la lista de pedidos de la ceramica seleccionada..
+	 */
+	public List<Pedido> getPedidos() throws Exception {
+		if (this.selectedCeramica == null) {
+			return new ArrayList<Pedido>();
+		}
+		RegisterDomain rr = RegisterDomain.getInstance();
+		return rr.getPedidos(this.selectedCeramica.getId());
 	}
 	
 	/**
