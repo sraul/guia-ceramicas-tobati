@@ -23,7 +23,7 @@
 	
 		<!-- LISTA DE CERAMICAS -->
 		
-		<vbox vflex="true" width="270px" align="center" style="margin:20px">
+		<vbox vflex="true" width="300px" align="center" style="margin:20px">
 			<label class="label label-default" style="background:#8F6E46;color:white;font-size:15pt" hflex="true">Cerámicas Registradas</label>
 			<listbox vflex="true" width="250px"
 				model="@load(vm.ceramicas)"
@@ -85,14 +85,29 @@
 		
 		<!-- LISTA DE PEDIDOS PENDIENTES -->
 		
-		<vbox vflex="true" width="270px" align="center" style="margin:20px">
+		<vbox vflex="true" width="300px" align="center" style="margin:20px">
 			<label class="label label-default" style="background:#8F6E46;color:white;font-size:15pt" hflex="true">Pedidos Pendientes</label>
 			<listbox vflex="true" width="250px"
 				emptyMessage="SIN PEDIDOS PENDIENTES.."
 				style="border-radius:8px"
-				model="@load(vm.pedidos)">
+				model="@load(vm.pedidos)"
+				selectedItem="@bind(vm.selectedPedido)">
+				<listhead>
+					<listheader></listheader>
+					<listheader></listheader>
+					<listheader align="right"></listheader>
+					<listheader align="center"></listheader>
+				</listhead>
 				<template name="model">
-					<listitem label="@load(each.numero)"/>
+					<listitem onDoubleClick="@command('reportePedido')">
+						<listcell label="@load(each.fecha) @converter('formattedDate', format='dd-MM-yy')" />
+						<listcell label="@load(each.numero)" />
+						<listcell label="@load(each.totalImporteGs) @converter('formattedNumber', format='###,###,##0')" />
+						<listcell>
+							<a iconSclass="z-icon-caret-down" onClick='pop_confirmar.open(self, "after_end")'
+								style="font-size:12pt"/>
+						</listcell>
+					</listitem>
 				</template>
 			</listbox>
 		</vbox>
@@ -161,6 +176,16 @@
 						label="Guardar Cambios" width="400px" 
 						style="background:#8F6E46;color:white"
 						onClick="@command('guardarCeramica')"/>
+	</popup>
+	
+	<popup id="pop_confirmar" style="border-radius:8px">
+		<hlayout>
+			<button iconSclass="z-icon-check"
+				style="background:#8F6E46;color:white" width="70px"></button>
+			<div width="5px"></div>
+			<button iconSclass="z-icon-times"
+				style="background:#8F6E46;color:white" width="70px"></button>
+		</hlayout>
 	</popup>
 	
 	<style>

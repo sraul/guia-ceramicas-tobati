@@ -23,6 +23,17 @@ public class Pedido extends Domain {
 	public int compareTo(Object o) {
 		return -1;
 	}
+	
+	/**
+	 * @return el importe total del pedido..
+	 */
+	public double getTotalImporteGs() {
+		double out = 0;
+		for (PedidoDetalle det : this.detalles) {
+			out += det.getImporte();
+		}
+		return out;
+	}
 
 	public Date getFecha() {
 		return fecha;
