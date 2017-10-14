@@ -5,9 +5,12 @@
 	apply="org.zkoss.bind.BindComposer"
 	viewModel="@id('vm') @init('com.guia.gestion.login.LoginViewModel')">
 
-	<div hflex="true" vflex="true"> 
+	<div hflex="true" vflex="true" style="background-image:url('images/fondo.jpg');
+							background-repeat: no-repeat;
+							background-position: center;
+							background-size: 100% 100%; background-opacity: 0.7"> 
 		<vbox hflex="true" vflex="true" pack="center" align="center">
-			<image src="/images/logo.png"></image>
+			<image src="/images/logo.png" style="border-radius:8px"></image>
 			<vbox id="vb_log" width="200px">
 				<div height="10px"></div>
 				<textbox placeholder="Usuario.." hflex="true" value="@bind(vm.user)"
@@ -19,7 +22,7 @@
 				<button label="Ingresar" hflex="true" style="background:#8F6E46;color:white"
 					onClick="@command('loguearse')"></button>
 				<div height="10px"></div>
-				<a label="Registrarse.." style="color:#8F6E46;font-size:11pt"
+				<a label="Registrarse.." style="font-size:12pt;font-weight:bold;color:white"
 					onClick="vb_log.setVisible(false);vb_reg.setVisible(true)"></a>
 			</vbox>	
 			<vbox id="vb_reg" width="200px" visible="false">

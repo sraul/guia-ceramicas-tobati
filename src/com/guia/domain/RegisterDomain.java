@@ -49,7 +49,8 @@ public class RegisterDomain extends Register {
 	 * @return la lista de pedidos segun ceramica..
 	 */
 	public List<Pedido> getPedidos(long idCeramica) throws Exception {
-		String query = "select p from Pedido p where p.ceramica.id = " + idCeramica + " order by p.numero";
+		String query = "select p from Pedido p where p.ceramica.id = " + idCeramica + " "
+				+ " and p.dbEstado != '" + Pedido.ESTADO_CONFIRMADO +  "' order by p.numero";
 		return this.hql(query);
 	}
 	

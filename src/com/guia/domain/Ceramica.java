@@ -12,8 +12,8 @@ public class Ceramica extends Domain {
 	private String direccion = "";
 	private String telefono = "";
 	
-	private double latitud;
-	private double longitud;
+	private String latitud = "";
+	private String longitud = "";
 	
 	private Set<Articulo> articulos = new HashSet<Articulo>();
 	
@@ -46,22 +46,6 @@ public class Ceramica extends Domain {
 		this.telefono = telefono;
 	}
 
-	public double getLatitud() {
-		return latitud;
-	}
-
-	public void setLatitud(double latitud) {
-		this.latitud = latitud;
-	}
-
-	public double getLongitud() {
-		return longitud;
-	}
-
-	public void setLongitud(double longitud) {
-		this.longitud = longitud;
-	}
-
 	public Set<Articulo> getArticulos() {
 		return articulos;
 	}
@@ -70,4 +54,19 @@ public class Ceramica extends Domain {
 		this.articulos = articulos;
 	}
 
+	public String getLatitud() {
+		return latitud;
+	}
+
+	public void setLatitud(String latitud) {
+		this.latitud = latitud;
+	}
+
+	public String getLongitud() {
+		return longitud;
+	}
+
+	public void setLongitud(String longitud) {
+		this.longitud = longitud;
+	}
 }

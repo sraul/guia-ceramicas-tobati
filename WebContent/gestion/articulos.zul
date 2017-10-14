@@ -18,6 +18,13 @@
 		<div width="20px"></div>
 	</hbox>
 
+	<vbox hflex="true" vflex="true" style="background-image:url('fondo.jpg');
+							background-repeat: no-repeat;
+							background-position: center;
+							background-size: 100% 100%; background-opacity: 0.7">
+	
+	
+
 	<hbox style="margin:20px 0px 0px 20px">
 		<button sclass="btn-primary" label="Agregar" width="150px"
 			style="background:#8F6E46;color:white" 
@@ -36,7 +43,7 @@
 	
 	<hbox vflex="true">
 		
-		<listbox vflex="true" hflex="true" style="border-radius:8px;margin:10px 10px 20px 20px"
+		<listbox vflex="true" hflex="true" style="border-radius:8px;margin:10px 10px 20px 20px;background:white"
 			emptyMessage="SIN ARTICULOS.."
 			model="@load(vm.selectedCeramica.articulos)"
 			selectedItem="@bind(vm.selectedArticulo)">
@@ -65,7 +72,7 @@
 		
 		<vlayout hflex="true" vflex="true" style="padding:10px 20px 20px 20px">
 			
-			<image vflex="true" hflex="true" style="border:1px solid #cfcfcf;border-radius: 8px"
+			<image vflex="true" hflex="true" style="border:1px solid #cfcfcf;border-radius: 8px; background:white"
 				src="@load(vm.selectedArticulo.imageSRC)"></image>
 			<button id="test" sclass="btn-primary" label="Subir Imagen" width="150px"
 				style="background:#8F6E46;color:white;font-size:10pt" 
@@ -75,6 +82,8 @@
 		</vlayout>
 	
 	</hbox>
+	
+	</vbox>
 	
 	<!-- PIE DE PAGINA -->
 	<hbox height="50px" width="100%" sclass="cabecera rounded"

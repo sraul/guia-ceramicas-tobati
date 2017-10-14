@@ -9,6 +9,8 @@ import com.coreweb.domain.Domain;
 @SuppressWarnings("serial")
 public class Pedido extends Domain {
 
+	public static Character ESTADO_CONFIRMADO = 'C'; 
+	
 	private Date fecha;
 	private String numero;
 	private String nombreApellido;

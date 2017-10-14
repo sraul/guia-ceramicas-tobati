@@ -16,10 +16,18 @@
 		</button>
 		<label sclass="titulo">Menú Principal</label>
 		<div hflex="true" />
+		<button sclass="btn-success" iconSclass="z-icon-question"
+			onClick='pop_ayuda.open(self, "after_end")'
+			style="background-color:White; color:#8F6E46; margin-left: 15px">
+			Ayuda..
+		</button>
 		<div width="20px"></div>
 	</hbox>
 	
-	<hbox width="100%" vflex="true">
+	<hbox width="100%" vflex="true" style="background-image:url('fondo.jpg');
+							background-repeat: no-repeat;
+							background-position: center;
+							background-size: 100% 100%; background-opacity: 0.7">
 	
 		<!-- LISTA DE CERAMICAS -->
 		
@@ -27,7 +35,7 @@
 			<label class="label label-default" style="background:#8F6E46;color:white;font-size:15pt" hflex="true">Cerámicas Registradas</label>
 			<listbox vflex="true" width="250px"
 				model="@load(vm.ceramicas)"
-				style="border-radius:8px">
+				style="border-radius:8px; background:white">
 				<template name="model">
 					<listitem>
 						<listcell>
@@ -42,7 +50,8 @@
 		</vbox>
 
 		<vbox pack="center" align="center" hflex="true" height="100%">
-			<vlayout style="text-align:left;margin-top:40px">
+			<vlayout style="text-align:left;margin-top:40px;border-radius:8px;background:#8F6E46; padding:20px"
+				width="350px">
 				<label
 					value="@load(vm.propietarioLogueado.ceramica.nombre)"
 					sclass="subtitulo">
@@ -66,8 +75,9 @@
 					</label>
 				</hlayout>
 			</vlayout>
-
-			<image src="/images/logo.png"></image>
+			<space></space>
+			<image src="/images/logo.png" style="border-radius:8px"></image>
+			<space></space>
 			<vbox>
 				<hbox>
 					<button sclass="btn-primary btn-lg"
@@ -89,7 +99,7 @@
 			<label class="label label-default" style="background:#8F6E46;color:white;font-size:15pt" hflex="true">Pedidos Pendientes</label>
 			<listbox vflex="true" width="250px"
 				emptyMessage="SIN PEDIDOS PENDIENTES.."
-				style="border-radius:8px"
+				style="border-radius:8px; background:white"
 				model="@load(vm.pedidos)"
 				selectedItem="@bind(vm.selectedPedido)">
 				<listhead>
@@ -157,17 +167,31 @@
 						value="@bind(vm.selectedCeramica.telefono)"></textbox>
 				</row>
 				<row>
-					<label>LATITUD:</label>
-					<textbox hflex="true"></textbox>
+					<cell colspan="2">
+						<html>
+							<![CDATA[ <p id="demo"></p> ]]>
+						</html>
+					</cell>
+				</row>
+				<row visible="false">
+					<cell colspan="2">
+						<label id="lat">
+							<custom-attributes org.zkoss.zk.ui.updateByClient="true"/>
+						</label>
+						<label id="lon">
+							<custom-attributes org.zkoss.zk.ui.updateByClient="true"/>
+						</label>
+					</cell>
 				</row>
 				<row>
-					<label>LONGITUD:</label>
-					<textbox hflex="true"></textbox>
-				</row>
-				<row>
-					<label>UBICACIÓN:</label>
+					<label>UBICACIÓN:</label> 
 					<button iconSclass="z-icon-map-marker" sclass="btn-primary"
-						style="background:#8F6E46;color:white"></button>
+						style="background:#8F6E46;color:white"
+						label="UBICACIÓN ACTUAL">
+						<attribute name="onClick">
+							Clients.evalJavaScript("getLocation()");
+						</attribute>
+					</button>
 				</row>
 			</rows>
 		</grid>
@@ -175,22 +199,92 @@
 		<button sclass="btn-primary"
 						label="Guardar Cambios" width="400px" 
 						style="background:#8F6E46;color:white"
-						onClick="@command('guardarCeramica')"/>
-	</popup>
+						onClick="@command('guardarCeramica', latitud=lat, longitud=lon)"/>
+	</popup>   	
+    
+    <script type="text/javascript">    	
+    	function getLocation() {
+    	var x = document.getElementById("demo");
+    		if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition);
+    } else { 
+        x.innerHTML = "GEOLOCALIZACION NO SOPORTADA POR SU NAVEGADOR";
+    }
+		}
+		function showPosition(position) {
+			var x = document.getElementById("demo");			
+			x.innerHTML = "Coordenadas: " + position.coords.latitude + " / " + position.coords.longitude;   
+			zk.Widget.$('$lat').setValue(position.coords.latitude);	
+			zk.Widget.$('$lon').setValue(position.coords.longitude);	
+			zk.Widget.$('$lat').smartUpdate('value', position.coords.latitude);	
+			zk.Widget.$('$lon').smartUpdate('value', position.coords.longitude);	
+		}
+		function copy() {
+		}
+	</script>
 	
 	<popup id="pop_confirmar" style="border-radius:8px">
 		<hlayout>
 			<button iconSclass="z-icon-check"
-				style="background:#8F6E46;color:white" width="70px"></button>
+				style="background:#8F6E46;color:white" width="70px"
+				onClick="@command('confirmarPedido')"></button>
 			<div width="5px"></div>
 			<button iconSclass="z-icon-times"
-				style="background:#8F6E46;color:white" width="70px"></button>
+				style="background:#8F6E46;color:white" width="70px"
+				onClick="@command('cancelarPedido')"></button>
 		</hlayout>
 	</popup>
 	
+	<popup id="pop_ayuda" style="border-radius:8px" width="300px" height="300px">
+		<vlayout>
+			<button style="background:#8F6E46;color:white;text-align:left" hflex="true"
+				iconSclass="z-icon-video-camera" onClick="pop_ingresar.open(100,100)">Ingresar..</button>
+			<button style="background:#8F6E46;color:white;text-align:left" hflex="true"
+				iconSclass="z-icon-video-camera" onClick="pop_registrarse.open(100,100)">Registrarse..</button>
+			<button style="background:#8F6E46;color:white;text-align:left" hflex="true"
+				iconSclass="z-icon-video-camera" onClick="pop_agregar_articulos.open(100,100)">Agregar Articulos..</button>
+			<button style="background:#8F6E46;color:white;text-align:left" hflex="true"
+				iconSclass="z-icon-video-camera" onClick="pop_datos_ceramica.open(100,100)">Datos de la Cerámica..</button>
+			<button style="background:#8F6E46;color:white;text-align:left" hflex="true"
+				iconSclass="z-icon-video-camera" onClick="pop_modificar_articulo.open(100,100)">Modificar Articulos..</button>
+			<button style="background:#8F6E46;color:white;text-align:left" hflex="true"
+				iconSclass="z-icon-video-camera" onClick="pop_salir_pagina.open(100,100)">Salir de la página..</button>
+			<button style="background:#8F6E46;color:white;text-align:left" hflex="true"
+				iconSclass="z-icon-video-camera" onClick="pop_pedidos_pendientes.open(100,100)">Ver pedidos pendientes..</button>
+		</vlayout>
+	</popup>
+	
+	<popup id="pop_ingresar" style="border-radius:8px; margin:20px" width="80%" height="90%">	
+		<iframe src="./videos/ingresar.webm" hflex="true" vflex="true"></iframe>	
+	</popup>
+	
+	<popup id="pop_registrarse" style="border-radius:8px; margin:20px" width="80%" height="90%">	
+		<iframe src="./videos/registrarse.webm" hflex="true" vflex="true"></iframe>	
+	</popup>
+	
+	<popup id="pop_agregar_articulos" style="border-radius:8px; margin:20px" width="80%" height="90%">	
+		<iframe src="./videos/agregar_articulos.webm" hflex="true" vflex="true"></iframe>	
+	</popup>
+	
+	<popup id="pop_datos_ceramica" style="border-radius:8px; margin:20px" width="80%" height="90%">	
+		<iframe src="./videos/datos_ceramica.webm" hflex="true" vflex="true"></iframe>	
+	</popup>
+	
+	<popup id="pop_modificar_articulo" style="border-radius:8px; margin:20px" width="80%" height="90%">	
+		<iframe src="./videos/modificar_articulos.webm" hflex="true" vflex="true"></iframe>	
+	</popup>
+	
+	<popup id="pop_salir_pagina" style="border-radius:8px; margin:20px" width="80%" height="90%">	
+		<iframe src="./videos/salir_pagina.webm" hflex="true" vflex="true"></iframe>	
+	</popup>
+	
+	<popup id="pop_pedidos_pendientes" style="border-radius:8px; margin:20px" width="80%" height="90%">	
+		<iframe src="./videos/pedidos_pendientes.webm" hflex="true" vflex="true"></iframe>	
+	</popup>
+	
 	<style>
-		.subtitulo { color:#8F6E46; font-weight:bold; font-size: 16pt }
-		.subtitulo_ { color:#8F6E46 }
+		.subtitulo { color:white; font-weight:bold; font-size: 20pt }
+		.subtitulo_ { color:white; font-weight:bold; font-size: 12pt }
 		.rounded { -webkit-border-radius: 5px; -moz-border-radius: 5px;
 		border-radius: 5px; } .cabecera { background-color:#8F6E46; }
 		.titulo { text-overflow: ellipsis; white-space: nowrap;

@@ -1,0 +1,28 @@
+<?page title="Waiting-Piri" contentType="text/html;charset=UTF-8"?>
+<?link rel="icon" type="image/x-icon" href="images/ic_alpasa.ico"?>
+<zk>
+<window apply="org.zkoss.bind.BindComposer"
+	viewModel="@id('vm') @init('com.guia.gestion.mapa.MapaViewModel')"
+	width="100%" height="100%"
+	id="win">
+	
+	<borderlayout id="body">		
+		<center
+			fulfill="self.onCreate">
+			
+			<div height="100%" width="100%">
+				<gmaps height="100%" hflex="true"
+					lat="-25.2656799" lng="-57.1048197"
+					children="@load(vm.ubicacionesCeramicas)"
+					zoom="15">
+					<template name="children">
+						<gmarker lat="@load(each[0])"
+							lng="@load(each[1])" content="@load(each[2])"
+							open="true" />
+					</template>
+				</gmaps>
+			</div>
+		</center>		
+	</borderlayout>	
+</window>
+</zk>

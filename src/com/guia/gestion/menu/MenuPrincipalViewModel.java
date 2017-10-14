@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.Init;
 import org.zkoss.bind.annotation.NotifyChange;
@@ -12,6 +13,7 @@ import org.zkoss.zhtml.Messagebox;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.util.Clients;
+import org.zkoss.zul.Label;
 import org.zkoss.zul.Window;
 
 import com.coreweb.domain.Usuario;
@@ -46,10 +48,13 @@ public class MenuPrincipalViewModel {
 	
 	@Command
 	@NotifyChange("ceramicas")
-	public void guardarCeramica() throws Exception {
+	public void guardarCeramica(@BindingParam("latitud") Label lat, 
+			@BindingParam("longitud") Label lon) throws Exception {
 		RegisterDomain rr = RegisterDomain.getInstance();
+		this.selectedCeramica.setLatitud(lat.getValue());
+		this.selectedCeramica.setLongitud(lon.getValue());
 		rr.saveObject(this.selectedCeramica, "sys");
-		Clients.showNotification("REGISTRO GUARDADO..");
+		Clients.showNotification("REGISTRO GUARDADO.. " + lat.getValue() + " / " + lon.getValue());
 	}
 	
 	@Command
@@ -78,6 +83,27 @@ public class MenuPrincipalViewModel {
 		ReportePedido rep = new ReportePedido(this.selectedPedido);
 		rep.setDatosReporte(list);
 		this.showReporte(rep);
+	}
+	
+	@Command
+	@NotifyChange("*")
+	public void confirmarPedido() throws Exception {
+		RegisterDomain rr = RegisterDomain.getInstance();
+		this.selectedPedido.setDbEstado(Pedido.ESTADO_CONFIRMADO);
+		rr.saveObject(this.selectedPedido, this.getUsuarioLogueado().getNombre());
+		
+		this.selectedPedido = null;
+		Clients.showNotification("PEDIDO CONFIRMADO..");
+	}
+	
+	@Command
+	@NotifyChange("*")
+	public void cancelarPedido() throws Exception {
+		RegisterDomain rr = RegisterDomain.getInstance();
+		rr.deleteObject(this.selectedPedido);
+		
+		this.selectedPedido = null;
+		Clients.showNotification("PEDIDO CANCELADO..");
 	}
 	
 	/**
